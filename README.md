@@ -15,3 +15,5 @@ This project implements a client-server architecture for a group chat applicatio
 - Displays sent and received messages on each client
 
 ## Project Structure
+
+![CSI2470ClassDiagram](https://github.com/user-attachments/assets/1ff094fd-b170-4024-8e02-8f5a9503f72f)
