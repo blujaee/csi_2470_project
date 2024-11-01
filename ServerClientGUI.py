@@ -1,4 +1,4 @@
-import kivy
+import kivy  # kivy is an option for creating the GUI. I'm fine with other libraries too
 
 class ServerClientGUI:
     def __init__(self):  # constructor
