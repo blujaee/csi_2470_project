@@ -4,7 +4,6 @@ import socket
 from threading import Thread
 
 from ServersIP import IP
-#from ClientBackend import *
 
 class ServerBackend: # constructor
     Clients = []
@@ -14,20 +13,19 @@ class ServerBackend: # constructor
         self.socket.bind((HOST, PORT))
         self.socket.listen(5)
         print('Initiating Chat...')
-        #return # placeholder to avoid errors
     
 def listen(self):
     while True:
         client_socket, address = self.socket.accept()
-        print("Recieved connection with:" + str(address))
+        print("Recieved connection with:" + str(address)) # this prints
 
         ClientName = client_socket.recv(3232).decode()
         client = {'ClientName': ClientName, 'client_socket': client_socket}
-
+        ServerBackend.Clients.append(client)
         sendMessage(self, ClientName, "Say hi to" + ClientName + "!")
 
-        ServerBackend.Clients.append(client)
-        Thread(target = configureNewClient(self, client)).start()
+        #ServerBackend.Clients.append(client)
+        Thread(target=configureNewClient(self, client), args=(self, client,)).start()
 
 def configureNewClient(self, client):
     ClientName = client['ClientName']
@@ -36,12 +34,12 @@ def configureNewClient(self, client):
         clientMessage = client_socket.recv(3232).decode()
 
         if clientMessage.strip() == ClientName + ": bye" or not clientMessage.strip():
-            self.sendMessage(ClientName, ClientName + "disconnected from chat")
+            sendMessage(self, ClientName, ClientName + "disconnected from chat")
             ServerBackend.Clients.remove(client)
             client_socket.close()
             break
         else:
-            self.sendMessage(ClientName, clientMessage)
+            sendMessage(self, ClientName, clientMessage)
 #establish connection with a new client
 
 def sendMessage(self, clientSending, message):
@@ -54,7 +52,5 @@ def sendMessage(self, clientSending, message):
 
 if __name__ == '__main__':
     server = ServerBackend(IP, 3232)
-    listen(server) # Corrected error here: may have come up since I'm running Python 3.11.9
-    #server stuff here
-    # may need client IPs here
+    listen(server)
    # ServerBackend(IP, 3232) # any socket number 1025 - 65536
