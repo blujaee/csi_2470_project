@@ -9,19 +9,29 @@ from ClientsIP import IP
 class ClientBackend:
 
     def __init__(self, HOST, PORT):
-        return # placeholder to avoid errors
+        self.socket = socket.socket()
+        self.socket.connect((HOST, PORT))
+        self.name = input("Enter your name: ")
+
+        self.connectToServer()
 
 def connectToServer(self):
-# establish connection to the server
-    return
+    self.socket.send(self.name.encode())
+    Thread(target = self.recieveMessage).start()
+    self.sendMessage()
     
 def recieveMessage(self):
-# constantly running listening for message
-    return
+    while True:
+        serverMessage = self.socket.recv(3232).decode()
+        if not serverMessage.strip():
+            os.exit(0)
+
     
 def sendMessage(self):
-# to send message to the server
-    return
+    while True:
+        clientInput = input("")
+        clientMessage = self.name + ": " + clientInput
+        self.socket.send(clientMessage.encode())
     
 if __name__ == '__main__':
     ClientBackend(IP, 3232)

@@ -2,9 +2,9 @@
 # note from Maria: wrote more of the server code not sure if it works yet havent tested
 import socket
 from threading import Thread
-import os
 
 from ServersIP import IP
+from ClientBackend import *
 
 class ServerBackend: # constructor
     Clients = []
@@ -16,36 +16,33 @@ class ServerBackend: # constructor
         print('Initiating Chat...')
         #return # placeholder to avoid errors
     
-def listenForConnections(self):
+def listen(self):
     while True:
-        client_socket, adress = self.socket.accept()
-        print("Recieved connection with:" + str(adress))
+        client_socket, address = self.socket.accept()
+        print("Recieved connection with:" + str(address))
 
-        ClientName = client_socket.recv(1024).decode()
+        ClientName = client_socket.recv(3232).decode()
         client = {'ClientName': ClientName, 'client_socket': client_socket}
 
         self.broadcast_message(ClientName, "Say hi to" + ClientName + "!")
 
-        Server.Clients.append(client)
+        ServerBackend.Clients.append(client)
         Thread(target = configureNewClient, args = (client,)).start()
-# listen for requests
-    #return #another placeholder
 
 def configureNewClient(self, client):
     ClientName = client['client_name']
     client_socket = client['client_socket']
     while True:
-        clientMessage = client_socket.recv(1024).decode()
+        clientMessage = client_socket.recv(3232).decode()
 
-        if client_message.strip() == ClientName + ": bye" or not clientMessage.strip():
+        if clientMessage.strip() == ClientName + ": bye" or not clientMessage.strip():
             self.sendMessage(ClientName, ClientName + "disconnected from chat")
-            Server.clients.remove(client)
+            ServerBackend.Clients.remove(client)
             client_socket.close()
             break
         else:
             self.sendMessage(ClientName, clientMessage)
 #establish connection with a new client
-    return
 
 def sendMessage(self, clientSending, message):
     for client in self.Clients:
@@ -54,11 +51,10 @@ def sendMessage(self, clientSending, message):
         if ClientName != clientSending:
             client_socket.send(message.encode())
 # send message prompted by client
-    return
 
-if __name__ == 'main':
-    #server = Server('127.0.0.1' 7632)
-    #server.listen()
+if __name__ == '__main__':
+    server = ServerBackend(IP, 3232)
+    server.listen()  # isn't liking .listen
     #server stuff here
     # may need client IPs here
-    ServerBackend(IP, 3232) # any socket number 1025 - 65536
+   # ServerBackend(IP, 3232) # any socket number 1025 - 65536
