@@ -13,18 +13,18 @@ class ClientBackend:
         self.socket.connect((HOST, PORT))
         self.name = input("Enter your name: ")
 
-        self.connectToServer()
+        connectToServer(self)
 
 def connectToServer(self):
     self.socket.send(self.name.encode())
-    Thread(target = self.recieveMessage).start()
+    Thread(target = recieveMessage(self)).start()
     self.sendMessage()
     
 def recieveMessage(self):
     while True:
         serverMessage = self.socket.recv(3232).decode()
         if not serverMessage.strip():
-            os.exit(0)
+            os._exit(0)
 
     
 def sendMessage(self):

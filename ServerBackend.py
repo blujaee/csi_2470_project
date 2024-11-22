@@ -4,7 +4,7 @@ import socket
 from threading import Thread
 
 from ServersIP import IP
-from ClientBackend import *
+#from ClientBackend import *
 
 class ServerBackend: # constructor
     Clients = []
@@ -24,15 +24,15 @@ def listen(self):
         ClientName = client_socket.recv(3232).decode()
         client = {'ClientName': ClientName, 'client_socket': client_socket}
 
-        self.broadcast_message(ClientName, "Say hi to" + ClientName + "!")
+        sendMessage(self, ClientName, "Say hi to" + ClientName + "!")
 
         ServerBackend.Clients.append(client)
-        Thread(target = configureNewClient, args = (client,)).start()
+        Thread(target = configureNewClient(self, client)).start()
 
 def configureNewClient(self, client):
-    ClientName = client['client_name']
+    ClientName = client['ClientName']
     client_socket = client['client_socket']
-    while True:
+    while True:  # Get stuck here where client cannot send a message - can't type in terminal
         clientMessage = client_socket.recv(3232).decode()
 
         if clientMessage.strip() == ClientName + ": bye" or not clientMessage.strip():
@@ -54,7 +54,7 @@ def sendMessage(self, clientSending, message):
 
 if __name__ == '__main__':
     server = ServerBackend(IP, 3232)
-    server.listen()  # isn't liking .listen
+    listen(server) # Corrected error here: may have come up since I'm running Python 3.11.9
     #server stuff here
     # may need client IPs here
    # ServerBackend(IP, 3232) # any socket number 1025 - 65536
