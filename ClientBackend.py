@@ -13,26 +13,26 @@ class ClientBackend:
         self.socket.connect((HOST, PORT))
         self.name = input("Enter your name: ")
 
-        connectToServer(self)
+        self.connectToServer()
 
-def connectToServer(self):
-    self.socket.send(self.name.encode())
-    Thread(target = recieveMessage(self)).start()  # is waiting for a message from server?
-    print("send message")
-    sendMessage(self)
-    
-def recieveMessage(self):
-    while True:
-        serverMessage = self.socket.recv(3232).decode()
-        if not serverMessage.strip():
-            os._exit(0)
+    def connectToServer(self):
+        self.socket.send(self.name.encode())
+        Thread(target = self.recieveMessage).start()  
+        self.sendMessage()
+        
+    def recieveMessage(self):
+        while True:
+            serverMessage = self.socket.recv(1024).decode()
+            if not serverMessage.strip():
+                os._exit(0)
+            print(serverMessage)
 
 
-def sendMessage(self):
-    while True:
-        clientInput = input("Send Message: ")
-        clientMessage = self.name + ": " + clientInput
-        self.socket.send(clientMessage.encode())
+    def sendMessage(self):
+        while True:
+            clientInput = input("")
+            clientMessage = self.name + ": " + clientInput
+            self.socket.send(clientMessage.encode())
     
 if __name__ == '__main__':
     ClientBackend(IP, 3232)
