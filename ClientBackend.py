@@ -10,7 +10,11 @@ class ClientBackend:
 
     def __init__(self, HOST, PORT):
         self.socket = socket.socket()
-        self.socket.connect((HOST, PORT))
+        try:
+            self.socket.connect((HOST, PORT))
+        except:
+            print("error: server not running")
+            os._exit(0)
         self.name = input("Enter your name: ")
 
         self.connectToServer()
@@ -22,10 +26,14 @@ class ClientBackend:
         
     def recieveMessage(self):
         while True:
-            serverMessage = self.socket.recv(1024).decode()
-            if not serverMessage.strip():
+            try:
+                serverMessage = self.socket.recv(1024).decode()
+                if not serverMessage.strip():
+                    os._exit(0)
+                print(serverMessage)
+            except:
+                print("error: server unexpectedly shut down")
                 os._exit(0)
-            print(serverMessage)
 
 
     def sendMessage(self):
