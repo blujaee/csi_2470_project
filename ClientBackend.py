@@ -12,12 +12,11 @@ class ClientBackend:
         self.socket = socket.socket()
         try:
             self.socket.connect((HOST, PORT))
+            self.name = input("Enter your name: ")
+            self.connectToServer()
         except:
             print("error: server not running")
             os._exit(0)
-        self.name = input("Enter your name: ")
-
-        self.connectToServer()
 
     def connectToServer(self):
         self.socket.send(self.name.encode())
