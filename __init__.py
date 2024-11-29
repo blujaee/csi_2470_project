@@ -1,5 +1,5 @@
 from ClientBackend import ClientBackend
-# from ClientGUI import ClientGUI
+from ClientGUI import ClientGUI
 from ClientsIP import IP
 from FileManager import FileManager
 from ServerBackend import ServerBackend
