@@ -6,11 +6,14 @@ from threading import Thread
 from ServersIP import IP
 
 from datetime import date
+import signal
+import sys
 
 class ServerBackend: # constructor
     Clients = []
     UserList = [] #delete if causes issues -Maria
     Messages = [] #delete if causes issues -Maria
+    
 
     def __init__(self, HOST, PORT):
         self.socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -44,10 +47,12 @@ class ServerBackend: # constructor
                 self.sendMessage(ClientName, ClientName + " disconnected from chat")
                 ServerBackend.Clients.remove(client)
                 client_socket.close()
+
                 break
             else:
                 self.sendMessage(ClientName, clientMessage)
     #establish connection with a new client
+
 
     def sendMessage(self, clientSending, message):
         for client in self.Clients:
@@ -57,24 +62,43 @@ class ServerBackend: # constructor
                 client_socket.send(message.encode())
     # send message prompted by client
 
+    #delete if causes issues -Maria
+    def shutdown(self):
+        self.is_running = False
+        # Close all client connections
+        for client in self.Clients:
+            try:
+                client['client_socket'].close()
+            except Exception:
+                pass
+        self.socket.close()
+        self.save_chat_record()
+    #delete if causes issues -Maria
+    def save_chat_record(self):
+        filename = f"ChatRecord_{date.today()}.txt"
+        with open(filename, "w") as f:
+            f.write("Users:\n")
+            f.write(", ".join(self.UserList) + "\n")
+            f.write("Messages:\n")
+            f.writelines(message + "\n" for message in self.Messages)
+        print(f"Chat record saved to {filename}")
+    #delete if causes issues -Maria
+    def SignalHandler(sig, frame):
+        print("\nShutting down server...")
+        server.shutdown()
+        sys.exit(0)
+
 
 
 
 if __name__ == '__main__':
     server = ServerBackend(IP, 3232)
+
+    signal.signal(signal.SIGINT, ServerBackend.SignalHandler)  # Handle Ctrl+C delete if causes issues -Maria
     server.listen()
    # ServerBackend(IP, 3232) # any socket number 1025 - 65536
 
-   #message saving will delete if doesnt work -Maria
-    f = open("ChatRecord" + str(date.today()), "a")
-
-    f.write("Users:")
-
-    for i in UserList:
-        f.write(str(i) + ", ")
-
-    for x in Messages:
-        f.write(str(x)+ "\n")
-    f.close()
+    
+   
 
 
