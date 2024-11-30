@@ -5,8 +5,12 @@ from threading import Thread
 
 from ServersIP import IP
 
+from datetime import date
+
 class ServerBackend: # constructor
     Clients = []
+    UserList = [] #delete if causes issues -Maria
+    Messages = [] #delete if causes issues -Maria
 
     def __init__(self, HOST, PORT):
         self.socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -24,6 +28,8 @@ class ServerBackend: # constructor
 
             self.sendMessage(ClientName, "Say hi to " + ClientName + "!")
 
+            ServerBackend.UserList.append(ClientName) #delete if causes issues -Maria
+
             ServerBackend.Clients.append(client)
             Thread(target=self.configureNewClient, args=(client,)).start()
 
@@ -32,6 +38,7 @@ class ServerBackend: # constructor
         client_socket = client['client_socket']
         while True:  # Get stuck here where client cannot send a message - can't type in terminal
             clientMessage = client_socket.recv(1024).decode()
+            ServerBackend.Messages.append(clientMessage) #note delete if causes issues - Maria
 
             if clientMessage.strip() == ClientName + ": bye" or not clientMessage.strip():
                 self.sendMessage(ClientName, ClientName + " disconnected from chat")
@@ -50,7 +57,24 @@ class ServerBackend: # constructor
                 client_socket.send(message.encode())
     # send message prompted by client
 
+
+
+
 if __name__ == '__main__':
     server = ServerBackend(IP, 3232)
     server.listen()
    # ServerBackend(IP, 3232) # any socket number 1025 - 65536
+
+   #message saving will delete if doesnt work -Maria
+    f = open("ChatRecord" + str(date.today()), "a")
+
+    f.write("Users:")
+
+    for i in UserList:
+        f.write(str(i) + ", ")
+
+    for x in Messages:
+        f.write(str(x)+ "\n")
+    f.close()
+
+
