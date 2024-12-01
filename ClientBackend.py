@@ -13,6 +13,7 @@ class ClientBackend:
         try:
             self.socket.connect((HOST, PORT))
             self.name = input("Enter your name: ")
+            print("Type 'bye' to disconect and then enter Ctrl+c to properly exit. Chat will be saved and availible for your viewing afterwards.")
             self.connectToServer()
         except:
             print("error: server not running")
