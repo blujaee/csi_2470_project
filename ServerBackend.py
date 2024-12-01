@@ -82,7 +82,9 @@ class ServerBackend: # constructor
             f.write("Messages:\n")
             f.writelines(message + "\n" for message in self.Messages)
         print(f"Chat record saved to {filename}")
-    #delete if causes issues -Maria
+   
+
+   #delete if causes issues -Maria
     def SignalHandler(sig, frame):
         print("\nShutting down server...")
         server.shutdown()
@@ -99,6 +101,16 @@ if __name__ == '__main__':
    # ServerBackend(IP, 3232) # any socket number 1025 - 65536
 
     
-   
+   #message saving will delete if doesnt work -Maria
+    f = open("ChatRecord" + str(date.today()), "a")
+
+    f.write("Users:")
+
+    for i in UserList:
+        f.write(str(i) + ", ")
+
+    for x in Messages:
+        f.write(str(x)+ "\n")
+    f.close()
 
 
