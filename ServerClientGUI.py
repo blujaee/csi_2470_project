@@ -1,4 +1,5 @@
-# File path: server_dashboard.py
+# this currently isnt being used, its easier to run serverGUI then ClientGUI for as many clients as u want in terminal
+""" File path: server_dashboard.py
 
 import kivy
 from kivy.app import App
@@ -77,3 +78,4 @@ class ServerDashboardApp(App):
 # Main entry point
 if __name__ == "__main__":
     ServerDashboardApp().run()
+ """
