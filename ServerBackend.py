@@ -8,6 +8,7 @@ from ServersIP import IP
 from datetime import date
 import signal
 import sys
+import os
 
 class ServerBackend: # constructor
     Clients = []
@@ -17,9 +18,13 @@ class ServerBackend: # constructor
 
     def __init__(self, HOST, PORT):
         self.socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        self.socket.bind((HOST, PORT))
-        self.socket.listen(5)
-        print('Initiating Chat...')
+        try:
+            self.socket.bind((HOST, PORT))
+            self.socket.listen(5)
+            print('Initiating Chat...')
+        except:
+            print("error: tried running multiple instances of server")
+            os._exit(0)
     
     def listen(self):
         while True:
