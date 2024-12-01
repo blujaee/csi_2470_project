@@ -62,7 +62,7 @@ class ClientApp(App):
 
 if __name__ == "__main__":
     # Prompt for IP and PORT
-    HOST = input("Enter the server's IP address (default is 127.0.0.1): ") or "127.0.0.1"
+    HOST = input("Enter the server's IP address (default is 127.0.0.1): ")
     PORT = input("Enter the server's port (default is 3232): ")
     PORT = int(PORT) if PORT else 3232
 
