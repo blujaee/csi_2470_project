@@ -4,16 +4,17 @@ from kivy.app import App
 from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.label import Label
 from kivy.uix.scrollview import ScrollView
-from kivy.clock import Clock
 from threading import Thread
 
 from ServersIP import IP
 from ServerBackend import ServerBackend
 
-
+# defines my object as ChatServerApp
 class ChatServerApp(App):
+    
+    # creates an instance of my object with pointer self
     def build(self):
-        self.title = "Chat Server"
+        self.title = "ServerGUI"
 
         # Main layout
         self.root = BoxLayout(orientation='vertical')
