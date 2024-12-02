@@ -1,18 +1,24 @@
 # Python file to control I/O - reading and writing to chat logs
 from datetime import date
 
-from ServerBackend import UserList
-from ServerBackend import Messages
+from ServerBackend import ServerBackend
 
-f = open("ChatRecord" + str(date.today()), "a")
+filename = f"Record_{date.today()}.txt"
+with open(filename, "w") as f:
+    f.write("Users:\n")
+    f.write(", ".join(ServerBackend.UserList) + "\n")
+    f.write("Messages:\n")
+    f.writelines(message + "\n" for message in ServerBackend.Messages)
 
-f.write("Users:")
+#f = open("ChatRecord" + str(date.today()), "a")
 
-for i in UserList:
-    f.write(str(i) + ", ")
+#f.write("Users:")
 
-for x in Messages:
-    f.write(str(x)+ "\n")
+#for i in ServerBackend.UserList:
+ #   f.write(str(i) + ", ")
+
+#for x in ServerBackend.Messages:
+ #   f.write(str(x)+ "\n")
 
 
 
