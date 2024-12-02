@@ -112,8 +112,8 @@ class ServerBackend:
     def saveChatRecord(self):
         filename = f"ChatRecord_{date.today()}.txt"
         with open(filename, "w") as f:
-            f.write("Users:\n")
-            f.write(", ".join(self.UserList) + "\n")
+          #  f.write("Users:\n")
+          #  f.write(", ".join(self.UserList) + "\n")
             f.write("Messages:\n")
             f.writelines(message + "\n" for message in self.Messages)
         print(f"Chat record saved to {filename}")
