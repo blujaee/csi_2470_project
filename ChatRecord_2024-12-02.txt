@@ -1,7 +1,5 @@
 Messages:
-user2: hi there
-user1: hi
-user2: nice to chat with you
-user1: yeah
-user2: bye
-user1: bye
+test: testing chat saves
+test: Hi
+test: testingggggg
+test: bye
