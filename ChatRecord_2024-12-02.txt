@@ -1,11 +1,3 @@
 Users:
-Person A, Person B
+
 Messages:
-Person B: hi
-Person A: hi how are you?
-Person B: im good you?
-Person A: im good too!
-Person A: i have to go now
-Person A: bye
-Person B: okay
-Person B: bye

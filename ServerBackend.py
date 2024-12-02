@@ -80,9 +80,9 @@ class ServerBackend:
             except:
                 break
 
-        # Clean up after client disconnects
+        # Clean up after client disconnects, this affects ServerGUI
         ServerBackend.Clients.remove(client)
-        #ServerBackend.UserList.remove(ClientName)
+        ServerBackend.UserList.remove(ClientName)
         client_socket.close()
         if self.gui_mode:
             from kivy.clock import Clock
