@@ -82,7 +82,7 @@ class ServerBackend:
 
         # Clean up after client disconnects
         ServerBackend.Clients.remove(client)
-        ServerBackend.UserList.remove(ClientName)
+        #ServerBackend.UserList.remove(ClientName)
         client_socket.close()
         if self.gui_mode:
             from kivy.clock import Clock

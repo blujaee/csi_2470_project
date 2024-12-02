@@ -1,0 +1,9 @@
+Users:
+Person A, Person B
+Messages:
+Person B: hi how are you?
+Person A: hi im good are you good too?
+Person B: yes thank you!
+Person B: okay i have to go now
+Person B: bye
+Person A: bye
