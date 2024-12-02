@@ -5,20 +5,20 @@ from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.label import Label
 from kivy.uix.scrollview import ScrollView
 from threading import Thread
-import signal
-import sys
 
 from ServersIP import IP
 from ServerBackend import ServerBackend
 
 # defines my object as ChatServerApp
 class ChatServerApp(App):
-    
-    # creates an instance of my object with pointer self
+
+    # construct the root widget
     def build(self):
+
+        # Sets title of ServerGUI screen
         self.title = "ServerGUI"
 
-        # Main layout
+        # Main layout, root is conventionally what is used for the main widget in Kivy
         self.root = BoxLayout(orientation='vertical')
 
         # Scrollable text area for server logs
@@ -56,15 +56,7 @@ class ChatServerApp(App):
         self.log_history.text += message + '\n'
         self.scroll_view_logs.scroll_y = 0  # Scroll to the bottom
 
-    def signal_handler(self, sig, frame):
-        print("\nShutting down server via GUI...")
-        self.server_backend.shutdown()
-        sys.exit(0)
-
-    def on_stop(self):
-        # Save chat records when the GUI is closed
-        self.server_backend.shutdown()
-
 
 if __name__ == '__main__':
+    # create an instance of the object 
     ChatServerApp().run()
