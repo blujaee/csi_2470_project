@@ -6,6 +6,8 @@ from kivy.uix.label import Label
 from kivy.uix.scrollview import ScrollView
 from kivy.clock import Clock
 from threading import Thread
+import signal
+import sys
 
 from ServersIP import IP
 from ServerBackend import ServerBackend
@@ -52,6 +54,15 @@ class ChatServerApp(App):
         # Update server log safely on the main thread
         self.log_history.text += message + '\n'
         self.scroll_view_logs.scroll_y = 0  # Scroll to the bottom
+
+    def signal_handler(self, sig, frame):
+        print("\nShutting down server via GUI...")
+        self.server_backend.shutdown()
+        sys.exit(0)
+
+    def on_stop(self):
+        # Save chat records when the GUI is closed
+        self.server_backend.shutdown()
 
 
 if __name__ == '__main__':
