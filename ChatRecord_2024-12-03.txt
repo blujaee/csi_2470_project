@@ -1,0 +1,9 @@
+Users:
+Person A, Person B
+Messages:
+Person A: Hi this is a test
+Person B: testing here too
+Person B: okay it works!
+Person A: yes it does!
+Person B: bye
+Person A: bye
