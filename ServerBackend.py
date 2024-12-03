@@ -15,7 +15,8 @@ import os
 class ServerBackend:
     # initialize LISTS (shared variables) to store information
     Clients = []
-    UserList = []
+    #These lists are used to keep track of all chat users and the messages sent
+    UserList = [] 
     Messages = []
 
     # Constructor METHOD to initialize an instance of ServerBackend
@@ -79,7 +80,7 @@ class ServerBackend:
 
                 # Calls sendMessage method to notift other clients that a new client has joined the class
                 self.sendMessage(f"{ClientName} has joined the chat!")
-
+                # calls ServerBackend CLASS and .append() METHOD to add ClientName to UserList
                 ServerBackend.UserList.append(ClientName)
                 if self.gui_mode:
                     # Calls Clock METHOD from Kivy to schedule updates on a background thread
@@ -130,8 +131,6 @@ class ServerBackend:
         # Clean up after client disconnects, this affects ServerGUI
         # calls .remove() METHOD to remove the client information from the Clients LIST in ServerBackend CLASS
         ServerBackend.Clients.remove(client)
-        # calls .remove() METHOD to remove the client name from the UserList LIST in ServerBackend CLASS
-        ServerBackend.UserList.remove(ClientName)
         # calls .close() METHOD to close that clients socket
         client_socket.close()
 
@@ -150,7 +149,7 @@ class ServerBackend:
                 pass 
 
         self.logMessage(message)
-
+    #sets up safe server closure to allow for txt file to be finalized and saved
     def shutdown(self):
         self.is_running = False
         # Close all client connections
@@ -161,16 +160,17 @@ class ServerBackend:
                 pass
         self.socket.close()
         self.saveChatRecord()
-
+    #writes a txt file displaying all clients that joined the server and the messages that they sent
+    #saves with current date using 'date.today()'
     def saveChatRecord(self):
         filename = f"ChatRecord_{date.today()}.txt"
         with open(filename, "w") as f:
-          #  f.write("Users:\n")
-          #  f.write(", ".join(self.UserList) + "\n")
+            f.write("Users:\n")
+            f.write(", ".join(self.UserList) + "\n") #prints all users in one line
             f.write("Messages:\n")
-            f.writelines(message + "\n" for message in self.Messages)
+            f.writelines(message + "\n" for message in self.Messages) #separates messages into different lines
         print(f"Chat record saved to {filename}")
-
+    #shuts down server and displays that action being done on the terminal
     def SignalHandler(sig, frame):
         print("\nShutting down server...")
         server.shutdown()
