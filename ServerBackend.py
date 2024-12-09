@@ -1,5 +1,4 @@
 #backend to handle the server side functionality
-# note from Maria: wrote more of the server code not sure if it works yet havent tested
 
 import socket
 from threading import Thread
@@ -182,5 +181,4 @@ if __name__ == '__main__':
 
     signal.signal(signal.SIGINT, ServerBackend.SignalHandler)  # Handle Ctrl+C
     server.listen()
-       # ServerBackend(IP, 3232) # any socket number 1025 - 65536
 
